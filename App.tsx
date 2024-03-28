@@ -27,6 +27,7 @@ import {
 import ClassView from './src/components/Classview';
 import FunctionView from './src/components/FunctionView';
 import TextDemo from './src/components/demo/TextDemo';
+import PersonalInfo from './src/components/PersonalInfo';
 // type SectionProps = PropsWithChildren<{
 //   title: string;
 // }>;
@@ -74,9 +75,10 @@ function App(): React.JSX.Element {
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         <View>
-          <ClassView />
-          <FunctionView name="张三" level="1" sex="男" age={12} />
-          <TextDemo />
+          {/* <ClassView /> */}
+          {/* <FunctionView name="张三" level="1" sex="男" age={12} /> */}
+          {/* <TextDemo /> */}
+          <PersonalInfo />
         </View>
       </ScrollView>
     </SafeAreaView>
