@@ -63,6 +63,7 @@ function App(): React.JSX.Element {
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    flex: 1,
   };
 
   return (
@@ -71,16 +72,22 @@ function App(): React.JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ScrollView
+      {/* <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <View>
-          {/* <ClassView /> */}
-          {/* <FunctionView name="张三" level="1" sex="男" age={12} /> */}
-          {/* <TextDemo /> */}
-          <PersonalInfo />
-        </View>
-      </ScrollView>
+        style={backgroundStyle}></ScrollView> */}
+      {/* <View style={{flex: 1, backgroundColor: 'skyblue'}}></View> */}
+      {/* <ClassView /> */}
+      {/* <FunctionView name="张三" level="1" sex="男" age={12} /> */}
+      {/* <TextDemo /> */}
+      {/* <PersonalInfo /> */}
+
+      <View style={{height: '100%', width: '100%'}}>
+        {/* <Text>123</Text> */}
+        {/* <ClassView /> */}
+        {/* <FunctionView name="张三" level="1" sex="男" age={12} /> */}
+        <TextDemo />
+        {/* <PersonalInfo /> */}
+      </View>
     </SafeAreaView>
   );
 }

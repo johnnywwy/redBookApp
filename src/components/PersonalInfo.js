@@ -1,6 +1,6 @@
 import {
   Image, ImageBackground, ScrollView, StatusBar, SectionList, Modal,
-  TouchableOpacity, Text, View, StyleSheet, Pressable, Button
+  TouchableOpacity, Text, View, StyleSheet, Pressable, Button, Alert
 } from 'react-native';
 import React, { useState } from 'react';
 
@@ -190,6 +190,11 @@ function PersonalInfo() {
     return (
       <ImageBackground style={styles.imgBg} source={icon_bg} imageStyle={styles.bgImg}>
 
+        <View>
+          <Button title='按钮111' onPress={() => {
+            alert(123456)
+          }} />
+        </View>
         {/* 顶部按钮 */}
         <View style={styles.titleBar}>
           <Image style={styles.iconMenu} source={icon_menu} />
@@ -260,7 +265,7 @@ function PersonalInfo() {
           </TouchableOpacity>
         </View>
 
-      </ImageBackground>
+      </ImageBackground >
 
 
     )
@@ -443,6 +448,7 @@ function PersonalInfo() {
           <Image style={contentStyles.icon} source={icon_1} />
           <Text style={contentStyles.desc}>用一句话，分享今天的快乐吧～</Text>
           <Text style={contentStyles.button}>去分享</Text>
+
         </>
       );
       array[1] = (
@@ -469,6 +475,7 @@ function PersonalInfo() {
           <TouchableOpacity style={styles.tab} onPress={() => setTabIndex(0)}>
             <Text style={tabIndex === 0 ? styles.tabTxtSelected : styles.tabTxt}>笔记</Text>
             <View style={[styles.tabLine, tabIndex !== 0 && styles.hide]} />
+
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.tab} onPress={() => setTabIndex(1)}>
@@ -480,7 +487,9 @@ function PersonalInfo() {
             <Text style={tabIndex === 2 ? styles.tabTxtSelected : styles.tabTxt}>赞过</Text>
             <View style={[styles.tabLine, , tabIndex !== 2 && styles.hide]} />
           </TouchableOpacity>
-        </View>
+
+
+        </View >
 
         <View style={styles.contentLayout}>
           {getContent()[tabIndex]}
