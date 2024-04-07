@@ -1,33 +1,65 @@
-import {Button, StyleSheet, Text, View, Alert} from 'react-native';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  Platform,
+  Dimensions,
+  PixelRatio,
+  BackHandler,
+} from 'react-native';
+import React, {useEffect} from 'react';
+
+import {useBackHandler} from '@react-native-community/hooks';
+import Link from './Link';
 
 export default () => {
+  useBackHandler(() => {
+    console.log('安卓');
+    return true;
+  });
+  useEffect(() => {
+    console.log('ios');
+
+    // 监听安卓返回键
+    // BackHandler.addEventListener('hardwareBackPress', backForAndriod);
+
+    // return () => {
+    //   // 移除监听
+    //   // BackHandler.removeEventListener('hardwareBackPress', backForAndriod);
+    // };
+  });
+  // const backForAndriod = () => {
+  //   console.log('返回了');
+
+  //   return true;
+  // };
+
   return (
     <View style={style.root}>
-      <View style={{justifyContent: 'center', alignItems: 'center'}}>
-        <Button
-          title="Click me"
-          onPress={() => {
-            const btns = [
-              {text: '取消', onPress: () => console.log('取消')},
-              {text: '确认', onPress: () => console.log('确认')},
-              {text: '考虑一下', onPress: () => console.log('考虑一下')},
-            ];
-            // console.log('Button clicked')
-            Alert.alert('这是标题', '这是内容', btns);
-          }}
-        />
-      </View>
-      {/* <Text style={style.txt}>123456</Text>
-      <Text style={style.txt2}></Text>
-      <Text style={style.txt3}></Text> */}
+      <Link></Link>
     </View>
   );
 };
 
 const style = StyleSheet.create({
   root: {
-    flex: 1,
+    height: '100%',
     width: '100%',
-    backgroundColor: '#f0f0f0',
+    // backgroundColor: '#f0f0f0',
   },
+  // centerContainer: {
+  //   height: '100%',
+  //   width: '100%',
+  //   // flex: 1,
+  //   // justifyContent: 'center',
+  //   // alignItems: 'center',
+  // },
+
+  // test: {
+  //   ...StyleSheet.absoluteFillObject,
+  //   backgroundColor: 'red',
+  //   opacity: 0.5,
+  // },
 });

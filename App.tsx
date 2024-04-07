@@ -28,6 +28,7 @@ import ClassView from './src/components/Classview';
 import FunctionView from './src/components/FunctionView';
 import TextDemo from './src/components/demo/TextDemo';
 import PersonalInfo from './src/components/PersonalInfo';
+import Home from './src/components/Account_Password_Book/Home';
 // type SectionProps = PropsWithChildren<{
 //   title: string;
 // }>;
@@ -81,34 +82,39 @@ function App(): React.JSX.Element {
       {/* <TextDemo /> */}
       {/* <PersonalInfo /> */}
 
-      <View style={{height: '100%', width: '100%'}}>
+      <View style={styles.root}>
         {/* <Text>123</Text> */}
         {/* <ClassView /> */}
         {/* <FunctionView name="张三" level="1" sex="男" age={12} /> */}
-        <TextDemo />
+        {/* <TextDemo /> */}
         {/* <PersonalInfo /> */}
+        <Home />
       </View>
     </SafeAreaView>
   );
 }
 
-// const styles = StyleSheet.create({
-//   sectionContainer: {
-//     marginTop: 32,
-//     paddingHorizontal: 24,
-//   },
-//   sectionTitle: {
-//     fontSize: 24,
-//     fontWeight: '600',
-//   },
-//   sectionDescription: {
-//     marginTop: 8,
-//     fontSize: 18,
-//     fontWeight: '400',
-//   },
-//   highlight: {
-//     fontWeight: '700',
-//   },
-// });
+const styles = StyleSheet.create({
+  root: {
+    height: '100%',
+    width: '100%',
+  },
+  // sectionContainer: {
+  //   marginTop: 32,
+  //   paddingHorizontal: 24,
+  // },
+  // sectionTitle: {
+  //   fontSize: 24,
+  //   fontWeight: '600',
+  // },
+  // sectionDescription: {
+  //   marginTop: 8,
+  //   fontSize: 18,
+  //   fontWeight: '400',
+  // },
+  // highlight: {
+  //   fontWeight: '700',
+  // },
+});
 
 export default App;

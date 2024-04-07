@@ -7,7 +7,9 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "rebuild ios": "cd ios && rm -rf Pods && rm -f Podfile.lock && pod install",
+    "rebuild android": "cd android && ./gradlew clean"
   },
   "dependencies": {
     "@react-native-community/hooks": "^3.0.0",
