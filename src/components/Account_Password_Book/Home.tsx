@@ -32,6 +32,7 @@ export default () => {
         alignItems: 'center',
       },
       title: {
+        color: '#333',
         fontSize: 18,
         fontWeight: 'bold',
       },
@@ -40,124 +41,6 @@ export default () => {
       <View style={style.root}>
         <Text style={style.title}>账号密码本</Text>
       </View>
-    );
-  };
-
-  const genderMain = () => {
-    const style = StyleSheet.create({
-      root: {
-        width: '100%',
-        flex: 1,
-        backgroundColor: '#ebebeb',
-        padding: 12,
-      },
-      content: {
-        flex: 1,
-      },
-    });
-    return (
-      <View style={style.root}>
-        {/* */}
-        {genderList()}
-        {genderAdd()}
-        {/* {genderList()} */}
-      </View>
-    );
-  };
-
-  const genderList = () => {
-    const style = StyleSheet.create({
-      root: {
-        width: '100%',
-        height: 48,
-        backgroundColor: 'white',
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8,
-        borderBottomColor: 'black',
-        borderBottomWidth: 0.5,
-      },
-      topHeader: {
-        width: '100%',
-        padding: 12,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      },
-      imgAndTitle: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        // justifyContent: 'flex-start',
-      },
-      img: {
-        width: 24,
-        height: 24,
-        marginRight: 8,
-      },
-      title: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: 'black',
-        // backgroundColor: 'red',
-        // textAlign: 'center',
-      },
-      imgArrowWrapper: {
-        // backgroundColor: 'red',
-        padding: 4,
-      },
-      imgArrow: {
-        width: 18,
-        height: 18,
-      },
-      content: {
-        backgroundColor: 'white',
-        padding: 12,
-        paddingTop: 8,
-        borderBottomWidth: 0.5,
-        borderBottomColor: '#7b7b7b',
-      },
-      accountTypeWrapper: {
-        marginBottom: 8,
-      },
-      accountType: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: 'black',
-      },
-      accountNameAndPwd: {
-        flexDirection: 'row',
-      },
-      accountText: {
-        width: '50%',
-        fontSize: 14,
-      },
-    });
-    return (
-      <>
-        <View style={style.root}>
-          <View style={style.topHeader}>
-            <View style={style.imgAndTitle}>
-              <TouchableOpacity>
-                <Image source={icon_game} style={style.img} />
-              </TouchableOpacity>
-              <Text style={style.title}>游戏</Text>
-            </View>
-            <View style={style.imgArrowWrapper}>
-              <Image source={icon_arrow} style={style.imgArrow} />
-            </View>
-          </View>
-          <View style={style.content}>
-            <View>
-              <View style={style.accountTypeWrapper}>
-                <Text style={style.accountType}>QQ飞车</Text>
-              </View>
-              <View style={style.accountNameAndPwd}>
-                <Text style={style.accountText}>账号：12345456</Text>
-                <Text style={style.accountText}>账号：12345456</Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      </>
     );
   };
 
@@ -173,8 +56,8 @@ export default () => {
         // shadowOpacity: 0.5,
       },
       addImg: {
-        width: 52,
-        height: 52,
+        width: 42,
+        height: 42,
       },
     });
     return (
@@ -182,7 +65,7 @@ export default () => {
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={() => {
-            addAccount.current.show();
+            addAccount.current?.show();
           }}>
           <Image source={icon_add} style={style.addImg} />
         </TouchableOpacity>
