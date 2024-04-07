@@ -17,7 +17,9 @@ import React, {useEffect, useRef} from 'react';
 import icon_game from '../../../src/assets/account_password_book/icon_game.png';
 import icon_arrow from '../../../src/assets/account_password_book/icon_arrow.png';
 import icon_add from '../../../src/assets/account_password_book/icon_add.png';
+
 import AddAccount from './AddAccount';
+import SectionList from './SectionList';
 
 export default () => {
   // 顶部
@@ -78,6 +80,7 @@ export default () => {
   return (
     <View style={style.root}>
       {renderTitle()}
+      <SectionList />
       {/* {genderMain()} */}
       {/* {genderModal()} */}
       {genderAdd()}

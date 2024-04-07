@@ -34,10 +34,16 @@ export default forwardRef((props, ref) => {
   const [id, setId] = useState('');
 
   const [visible, setVisible] = useState(false);
-  const [type, setType] = useState('游戏');
+  const [type, setType] = useState('1');
   const [name, setName] = useState('');
   const [account, setAccount] = useState('');
   const [password, setPassowrd] = useState('');
+  // const [account2, setAccount2] = useState({
+  //   type: '1',
+  //   name: '',
+  //   account: '',
+  //   password: '',
+  // });
 
   const show = () => {
     setId(createUUID());
@@ -111,7 +117,12 @@ export default forwardRef((props, ref) => {
 
   // 账号类型
   const renderType = () => {
-    const typesList = ['游戏', '平台', '银行卡', '其他'];
+    const typesList = [
+      {id: '1', name: '游戏'},
+      {id: '2', name: '平台'},
+      {id: '3', name: '银行卡'},
+      {id: '4', name: '其他'},
+    ];
 
     const styles = StyleSheet.create({
       typeLayout: {
@@ -164,16 +175,16 @@ export default forwardRef((props, ref) => {
                 index === 0 ? styles.tabsLeft : {},
                 index === typesList.length - 1 ? styles.tabsRight : {},
                 index > 0 ? styles.removeLeftBorder : {}, //去除多余的边框
-                {backgroundColor: type === item ? '#3050ff' : 'transparent'},
+                {backgroundColor: type === item.id ? '#3050ff' : 'transparent'},
               ]}
-              onPress={() => setType(item)}>
+              onPress={() => setType(item.id)}>
               <Text
                 style={[
                   styles.tabsText,
-                  {color: type === item ? 'white' : '#666666'},
+                  {color: type === item.id ? 'white' : '#666666'},
                   // {backgroundColor: type === item ? '#3050ff' : '#fefefd'},
                 ]}>
-                {item}
+                {item.name}
               </Text>
             </TouchableOpacity>
           );
