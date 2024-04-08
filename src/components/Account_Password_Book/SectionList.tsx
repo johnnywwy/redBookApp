@@ -8,9 +8,11 @@ import {
   SectionListData,
   Image,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import React, {
   forwardRef,
+  useState,
   // useEffect,
   // useState,
   // useRef,
@@ -28,49 +30,128 @@ type DataList = {
   title: string;
   icon?: ImageSourcePropType;
   data: Record<string, any>;
+  showDetail?: boolean;
 };
 
-export default forwardRef((props, ref) => {
-  const dataList: DataList[] = [
-    {
-      title: '游戏',
-      icon: icon_game,
-      data: [
-        {
-          name: 'QQ飞车',
-          account: '123456',
-          password: '123456',
-        },
-        {
-          name: 'gmail',
-          account: '123456',
-          password: '123456',
-        },
-        {
-          name: 'apple',
-          account: '123456',
-          password: '123456',
-        },
-      ],
-    },
-    // {
-    //   title: '平台',
-    //   icon: icon_platform,
-    //   data: ['French Fries', 'Onion Rings', 'Fried Shrimps'],
-    // },
-    // {
-    //   title: '银行卡',
-    //   icon: icon_bank,
-    //   data: ['Water', 'Coke', 'Beer'],
-    // },
-    // {
-    //   title: '其他',
-    //   icon: icon_other,
-    //   data: ['Cheese Cake', 'Ice Cream'],
-    // },
-  ];
+const data = [
+  {
+    title: '游戏',
+    icon: icon_game,
+    showDetail: false,
+    data: [
+      {
+        name: 'QQ飞车',
+        account: '123456',
+        password: '123456',
+      },
+      {
+        name: 'gmail',
+        account: '123456',
+        password: '123456',
+      },
+      {
+        name: 'apple',
+        account: '123456',
+        password: '123456',
+      },
+    ],
+  },
+  {
+    title: '平台',
+    icon: icon_platform,
+    showDetail: false,
+    data: [
+      {
+        name: '母鸡',
+        account: '123456',
+        password: '123456',
+      },
+      {
+        name: '母鸡2',
+        account: '123456',
+        password: '123456',
+      },
+      {
+        name: '母鸡3',
+        account: '123456',
+        password: '123456',
+      },
+    ],
+  },
+  {
+    title: '银行卡',
+    icon: icon_bank,
+    showDetail: false,
+    data: [
+      {
+        name: 'QQ飞车',
+        account: '123456',
+        password: '123456',
+      },
+      {
+        name: 'QQ飞车',
+        account: '123456',
+        password: '123456',
+      },
+    ],
+  },
+  {
+    title: '其他',
+    icon: icon_other,
+    showDetail: false,
+    data: [
+      {
+        name: '666',
+        account: '123456',
+        password: '123456',
+      },
+      {
+        name: '777',
+        account: '123456',
+        password: '123456',
+      },
+    ],
+  },
+];
 
-  const renderSectionHeader = ({section}: {section: DataList}) => {
+export default forwardRef((props, ref) => {
+  const [arrowDirection, setArrowDirection] = useState('down');
+
+  const [dataList, setDataList] = useState(data);
+
+  // const dataList: DataList[] =
+
+  const onPress = (section: any) => {
+    // 从 event 中获取 nativeEvent 属性
+    // const {nativeEvent} = event;
+    // const section = nativeEvent.section;
+    console.log('99999', section);
+
+    //在dataList中找到对应的section，然后修改showDetail的值
+    const index = dataList.findIndex(item => item.title === section.title);
+    console.log('index', index);
+    if (index !== -1) {
+      // dataList[index].showDetail = !dataList[index].showDetail;
+      const updatedDataList = dataList.map((item, idx) => {
+        if (idx === index) {
+          return {
+            ...item,
+            showDetail: !item.showDetail,
+          };
+        }
+        return item;
+      });
+      console.log('updatedDataList', updatedDataList);
+
+      setDataList(updatedDataList);
+    }
+
+    // setDataList([...dataList]);
+
+    // setArrowDirection(arrowDirection === 'down' ? 'up' : 'down');
+  };
+
+  const renderSectionHeader = ({section}: any) => {
     const styles = StyleSheet.create({
       header: {
         flexDirection: 'row',
@@ -80,20 +161,30 @@ export default forwardRef((props, ref) => {
         backgroundColor: '#fff',
         paddingHorizontal: 16,
         marginTop: 16,
+        borderTopLeftRadius: 8,
+        borderTopRightRadius: 8,
+      },
+
+      headerBorderRadius: {
         borderRadius: 8,
       },
       iconAndText: {
         flexDirection: 'row',
         alignItems: 'center',
+        // borderWidth: 1,
       },
       icon: {
         width: 24,
         height: 24,
       },
       title: {
-        fontSize: 14,
+        lineHeight: 24,
+        fontSize: 16,
         fontWeight: 'bold',
         marginLeft: 8,
+        color: '#333',
+        includeFontPadding: false,
+        textAlignVertical: 'center',
       },
       arrowWarpper: {
         // padding: 8,
@@ -113,45 +204,99 @@ export default forwardRef((props, ref) => {
     });
 
     return (
-      <View style={styles.header}>
-        <View style={styles.iconAndText}>
-          <Image source={section.icon} style={styles.icon} />
-          <Text style={styles.title}>{section.title}</Text>
+      <TouchableOpacity activeOpacity={0.6} onPress={() => onPress(section)}>
+        <View
+          style={[
+            styles.header,
+            section.showDetail ? null : styles.headerBorderRadius,
+          ]}>
+          <View style={styles.iconAndText}>
+            <Image source={section.icon} style={styles.icon} />
+            <Text style={styles.title}>{section.title}</Text>
+          </View>
+          <View>
+            {/* <Text>{arrowDirection}</Text> */}
+            <Image
+              source={icon_arrow}
+              style={[
+                styles.arrowIcon,
+                {
+                  transform: [
+                    {rotate: arrowDirection === 'down' ? '0deg' : '-90deg'},
+                  ],
+                },
+              ]}
+            />
+            {/* </TouchableOpacity> */}
+          </View>
         </View>
-        <View>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            onPress={() => {
-              console.log('点击了箭头');
-            }}>
-            <Image source={icon_arrow} style={styles.arrowIcon} />
-          </TouchableOpacity>
-        </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
-  const renderItem = ({item}: any) => {
+  const renderItem = ({item, index, section}: any) => {
+    const isLastItem = index === section.data.length - 1;
+
+    console.log('isLastItem', index, section.data.length - 1);
+
     const styles = StyleSheet.create({
       item: {
         backgroundColor: '#fff',
         padding: 8,
         borderTopColor: '#e0e0e0',
         borderTopWidth: 1,
-        // borderBottomLeftRadius: 8,
-        // borderBottomRightRadius: 8,
+      },
+      itemBottomRadius: {
+        borderBottomLeftRadius: 8,
+        borderBottomRightRadius: 8,
+        // backgroundColor: 'pink',
+        marginBottom: 16,
+      },
+      titleLayout: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        // backgroundColor: '#f0f0f0',
+        // marginVertical: 8,
+        marginTop: 8,
+        marginBottom: 12,
+      },
+      title: {
+        paddingHorizontal: 8,
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#333',
+      },
+      accAndPwd: {
+        paddingHorizontal: 8,
+        flexDirection: 'row',
+        marginBottom: 8,
+      },
+      accAndPwdText: {
+        flex: 1,
+        color: '#333',
       },
     });
 
-    return (
-      <View style={[styles.item]}>
-        <Text style={styles.title}>{item.name}</Text>
+    return section.showDetail ? (
+      // <View style={[styles.item, isLastItem && styles.itemBottomRadius]}>
+      <View style={[styles.item, isLastItem && styles.itemBottomRadius]}>
+        <View style={styles.titleLayout}>
+          <Text style={styles.title}>{item.name}</Text>
+        </View>
+
+        <View style={[styles.accAndPwd]}>
+          <Text style={styles.accAndPwdText}>账号：{item.account}</Text>
+          <Text style={styles.accAndPwdText}>密码：{item.password}</Text>
+        </View>
       </View>
+    ) : (
+      <View />
     );
   };
 
   return (
     <SectionList
+      stickySectionHeadersEnabled={false}
       style={styles.container}
       sections={dataList}
       refreshing={false}
@@ -169,15 +314,12 @@ export default forwardRef((props, ref) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: StatusBar.currentHeight,
     marginHorizontal: 16,
+    // backgroundColor: 'pink',
+    // paddingTop: 16,
   },
-  item: {
-    backgroundColor: '#f9c2ff',
-    padding: 8,
-    // marginVertical: 8,
-  },
-  title: {
-    fontSize: 14,
-  },
+  // box: {
+  //   height: 16,
+  //   backgroundColor: '#f2f3f3',
+  // },
 });
