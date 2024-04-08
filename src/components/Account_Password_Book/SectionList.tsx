@@ -101,12 +101,12 @@ const data = [
     showDetail: false,
     data: [
       {
-        name: '666',
+        name: '倒数啊啊啊',
         account: '123456',
         password: '123456',
       },
       {
-        name: '777',
+        name: '最后一个',
         account: '123456',
         password: '123456',
       },
@@ -115,21 +115,15 @@ const data = [
 ];
 
 export default forwardRef((props, ref) => {
-  const [arrowDirection, setArrowDirection] = useState('down');
+  // const [arrowDirection, setArrowDirection] = useState('down');
 
   const [dataList, setDataList] = useState(data);
 
   // const dataList: DataList[] =
 
   const onPress = (section: any) => {
-    // 从 event 中获取 nativeEvent 属性
-    // const {nativeEvent} = event;
-    // const section = nativeEvent.section;
-    console.log('99999', section);
-
     //在dataList中找到对应的section，然后修改showDetail的值
     const index = dataList.findIndex(item => item.title === section.title);
-    console.log('index', index);
     if (index !== -1) {
       // dataList[index].showDetail = !dataList[index].showDetail;
       const updatedDataList = dataList.map((item, idx) => {
@@ -141,14 +135,10 @@ export default forwardRef((props, ref) => {
         }
         return item;
       });
-      console.log('updatedDataList', updatedDataList);
+      // console.log('updatedDataList', updatedDataList);
 
       setDataList(updatedDataList);
     }
-
-    // setDataList([...dataList]);
-
-    // setArrowDirection(arrowDirection === 'down' ? 'up' : 'down');
   };
 
   const renderSectionHeader = ({section}: any) => {
@@ -164,9 +154,14 @@ export default forwardRef((props, ref) => {
         borderTopLeftRadius: 8,
         borderTopRightRadius: 8,
       },
-
       headerBorderRadius: {
+        // borderTopLeftRadius: 8,
+        // borderTopRightRadius: 8,
         borderRadius: 8,
+        // backgroundColor: 'pink',
+      },
+      headerBottomRadius: {
+        marginBottom: 16,
       },
       iconAndText: {
         flexDirection: 'row',
@@ -203,12 +198,16 @@ export default forwardRef((props, ref) => {
       },
     });
 
+    const idx = dataList[dataList.length - 1].data;
+    const isLastItem = idx === section.data;
+
     return (
       <TouchableOpacity activeOpacity={0.6} onPress={() => onPress(section)}>
         <View
           style={[
             styles.header,
             section.showDetail ? null : styles.headerBorderRadius,
+            isLastItem && !section.showDetail && styles.headerBottomRadius,
           ]}>
           <View style={styles.iconAndText}>
             <Image source={section.icon} style={styles.icon} />
@@ -221,9 +220,7 @@ export default forwardRef((props, ref) => {
               style={[
                 styles.arrowIcon,
                 {
-                  transform: [
-                    {rotate: arrowDirection === 'down' ? '0deg' : '-90deg'},
-                  ],
+                  transform: [{rotate: section.showDetail ? '0deg' : '-90deg'}],
                 },
               ]}
             />
@@ -235,9 +232,12 @@ export default forwardRef((props, ref) => {
   };
 
   const renderItem = ({item, index, section}: any) => {
+    //每个item的最后一个item，需要添加borderBottomRadius
     const isLastItem = index === section.data.length - 1;
 
-    console.log('isLastItem', index, section.data.length - 1);
+    const idx = dataList[dataList.length - 1].data;
+    const isLast = idx[idx.length - 1] === item;
+    // console.log('index', index);
 
     const styles = StyleSheet.create({
       item: {
@@ -249,7 +249,8 @@ export default forwardRef((props, ref) => {
       itemBottomRadius: {
         borderBottomLeftRadius: 8,
         borderBottomRightRadius: 8,
-        // backgroundColor: 'pink',
+      },
+      itemMarginBottom: {
         marginBottom: 16,
       },
       titleLayout: {
@@ -279,7 +280,12 @@ export default forwardRef((props, ref) => {
 
     return section.showDetail ? (
       // <View style={[styles.item, isLastItem && styles.itemBottomRadius]}>
-      <View style={[styles.item, isLastItem && styles.itemBottomRadius]}>
+      <View
+        style={[
+          styles.item,
+          isLast && styles.itemMarginBottom,
+          isLastItem && styles.itemBottomRadius,
+        ]}>
         <View style={styles.titleLayout}>
           <Text style={styles.title}>{item.name}</Text>
         </View>
