@@ -30,6 +30,7 @@ import TextDemo from './src/components/demo/TextDemo';
 import PersonalInfo from './src/components/PersonalInfo';
 import Home from './src/components/Account_Password_Book/Home';
 import Hoc from './src/components/HOC/infoView';
+import CustomInput from './src/components/Ref/customInput';
 // type SectionProps = PropsWithChildren<{
 //   title: string;
 // }>;
@@ -90,7 +91,8 @@ function App(): React.JSX.Element {
         {/* <TextDemo /> */}
         {/* <PersonalInfo /> */}
         {/* <Home /> */}
-        <Hoc />
+        {/* <Hoc /> */}
+        <CustomInput />
       </View>
     </SafeAreaView>
   );
