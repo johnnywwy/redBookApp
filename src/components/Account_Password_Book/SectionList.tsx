@@ -9,6 +9,8 @@ import {
   Image,
   TouchableOpacity,
   Platform,
+  ImageSourcePropType,
+  LayoutAnimation,
 } from 'react-native';
 import React, {
   forwardRef,
@@ -119,8 +121,6 @@ export default forwardRef((props, ref) => {
 
   const [dataList, setDataList] = useState(data);
 
-  // const dataList: DataList[] =
-
   const onPress = (section: any) => {
     //在dataList中找到对应的section，然后修改showDetail的值
     const index = dataList.findIndex(item => item.title === section.title);
@@ -139,6 +139,8 @@ export default forwardRef((props, ref) => {
 
       setDataList(updatedDataList);
     }
+    // 动画
+    LayoutAnimation.easeInEaseOut();
   };
 
   const renderSectionHeader = ({section}: any) => {
@@ -160,9 +162,9 @@ export default forwardRef((props, ref) => {
         borderRadius: 8,
         // backgroundColor: 'pink',
       },
-      headerBottomRadius: {
-        marginBottom: 16,
-      },
+      // headerBottomRadius: {
+      //   marginBottom: 16,
+      // },
       iconAndText: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -202,33 +204,49 @@ export default forwardRef((props, ref) => {
     const isLastItem = idx === section.data;
 
     return (
-      <TouchableOpacity activeOpacity={0.6} onPress={() => onPress(section)}>
-        <View
-          style={[
-            styles.header,
-            section.showDetail ? null : styles.headerBorderRadius,
-            isLastItem && !section.showDetail && styles.headerBottomRadius,
-          ]}>
-          <View style={styles.iconAndText}>
-            <Image source={section.icon} style={styles.icon} />
-            <Text style={styles.title}>{section.title}</Text>
+      <>
+        <TouchableOpacity activeOpacity={0.6} onPress={() => onPress(section)}>
+          <View
+            style={[
+              styles.header,
+              section.showDetail ? null : styles.headerBorderRadius,
+            ]}>
+            <View style={styles.iconAndText}>
+              <Image source={section.icon} style={styles.icon} />
+              <Text style={styles.title}>{section.title}</Text>
+            </View>
+            <View>
+              {/* <Text>{arrowDirection}</Text> */}
+              <Image
+                source={icon_arrow}
+                style={[
+                  styles.arrowIcon,
+                  {
+                    transform: [
+                      {rotate: section.showDetail ? '0deg' : '-90deg'},
+                    ],
+                  },
+                ]}
+              />
+              {/* </TouchableOpacity> */}
+            </View>
           </View>
-          <View>
-            {/* <Text>{arrowDirection}</Text> */}
-            <Image
-              source={icon_arrow}
-              style={[
-                styles.arrowIcon,
-                {
-                  transform: [{rotate: section.showDetail ? '0deg' : '-90deg'}],
-                },
-              ]}
-            />
-            {/* </TouchableOpacity> */}
-          </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+        {isLastItem && !section.showDetail && renderLastBox()}
+      </>
     );
+  };
+
+  const renderLastBox = () => {
+    const styles = StyleSheet.create({
+      lastBox: {
+        width: '100%',
+        height: 16,
+        // backgroundColor: 'pink',
+      },
+    });
+
+    return <View style={styles.lastBox}></View>;
   };
 
   const renderItem = ({item, index, section}: any) => {
@@ -246,12 +264,19 @@ export default forwardRef((props, ref) => {
         borderTopColor: '#e0e0e0',
         borderTopWidth: 1,
       },
-      itemBottomRadius: {
+      itemMarginRadius: {
         borderBottomLeftRadius: 8,
         borderBottomRightRadius: 8,
       },
+      lastBox: {
+        // borderBottomLeftRadius: 8,
+        // borderBottomRightRadius: 8,
+        height: 24,
+        width: '100%',
+        // backgroundColor: 'pink',
+      },
       itemMarginBottom: {
-        marginBottom: 16,
+        // marginBottom: 16,
       },
       titleLayout: {
         flexDirection: 'row',
@@ -279,23 +304,20 @@ export default forwardRef((props, ref) => {
     });
 
     return section.showDetail ? (
-      // <View style={[styles.item, isLastItem && styles.itemBottomRadius]}>
-      <View
-        style={[
-          styles.item,
-          isLast && styles.itemMarginBottom,
-          isLastItem && styles.itemBottomRadius,
-        ]}>
-        <View style={styles.titleLayout}>
-          <Text style={styles.title}>{item.name}</Text>
+      <>
+        <View style={[styles.item, isLastItem && styles.itemMarginRadius]}>
+          <View style={styles.titleLayout}>
+            <Text style={styles.title}>{item.name}</Text>
+          </View>
+          <View style={[styles.accAndPwd]}>
+            <Text style={styles.accAndPwdText}>账号：{item.account}</Text>
+            <Text style={styles.accAndPwdText}>密码：{item.password}</Text>
+          </View>
         </View>
-
-        <View style={[styles.accAndPwd]}>
-          <Text style={styles.accAndPwdText}>账号：{item.account}</Text>
-          <Text style={styles.accAndPwdText}>密码：{item.password}</Text>
-        </View>
-      </View>
+        {isLast && renderLastBox()}
+      </>
     ) : (
+      // </>
       <View />
     );
   };

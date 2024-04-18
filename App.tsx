@@ -29,6 +29,7 @@ import FunctionView from './src/components/FunctionView';
 import TextDemo from './src/components/demo/TextDemo';
 import PersonalInfo from './src/components/PersonalInfo';
 import Home from './src/components/Account_Password_Book/Home';
+import Hoc from './src/components/HOC/infoView';
 // type SectionProps = PropsWithChildren<{
 //   title: string;
 // }>;
@@ -88,7 +89,8 @@ function App(): React.JSX.Element {
         {/* <FunctionView name="张三" level="1" sex="男" age={12} /> */}
         {/* <TextDemo /> */}
         {/* <PersonalInfo /> */}
-        <Home />
+        {/* <Home /> */}
+        <Hoc />
       </View>
     </SafeAreaView>
   );
